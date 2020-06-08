@@ -1,6 +1,6 @@
 // 实现这个项目的构建任务
 
-const {src, dest, series, parallel, watch } = require('gulp');
+const {src, dest, series, parallel, watch, task } = require('gulp');
 const del = require('del')
 
 var browserSync = require('browser-sync');
@@ -168,15 +168,17 @@ const useref = () => {
      })))//htmlmin只是压缩空白字符，需要指定参数
     .pipe(dest("dist")) 
 }
+task('deploy',  () => src('dist/**').pipe(ghPages()))
 
-const deploy = () => src('./dist/**/*').pipe(ghPages());
+
 
 const compile = parallel([style, javascript, html])
 const build = series(clean, parallel([series(compile, useref), fonts, images, extra]))
 const develop = series(compile, serve)
+// const deploy = series(build, deploy);
 module.exports = {
     clean,
     build,
     develop,
-    deploy
+    // deploy
 }

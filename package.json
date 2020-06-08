@@ -29,6 +29,7 @@
     "serve": "gulp serve",
     "build": "gulp build",
     "develop": "gulp develop",
+    "predeploy":"npm run build",
     "deploy": "gulp deploy --production"
   },
   "browserslist": [
